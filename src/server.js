@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const Ddos = require('ddos');
 const routes = require('./api/v1/router');
-const error = require('./middlewares/error');
 const {
   whitelist, ddosConfig,
 } = require('./config');
@@ -47,13 +46,5 @@ server.use('/healthcheck', (req, res) => res.send('OK'));
 server.use('/api/v1', routes);
 server.use('/*', (req, res) => res.send('Not Found'));
 
-// if error is not an instanceOf APIError, convert it.
-server.use(error.converter);
-
-// catch 404 and forward to error handler
-server.use(error.notFound);
-
-// error handler, send stacktrace only during development
-server.use(error.handler);
 
 module.exports = server;

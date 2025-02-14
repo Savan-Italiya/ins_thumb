@@ -10,7 +10,7 @@ const { default: axios } = require('axios');
  */
 
 // eslint-disable-next-line consistent-return
-exports.sendWA = async (req, res, next) => {
+exports.sendWA = async (req, res) => {
   try {
     const {
       st_name, status, mobile, time,
