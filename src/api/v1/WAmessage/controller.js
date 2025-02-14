@@ -17,15 +17,14 @@ exports.sendWA = async (req, res) => {
     } = req.params;
 
     const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${mobile}&text=${bashSMS.template}&priority=wa&stype=normal`)
-    console.log("api response WA ", apiResponseofWA)
+    console.log("api response WA ", apiResponseofWA.data)
 
     await new WAMessages({
         userName: st_name,
         st_status: status,
         mobile: mobile,
-        created_at: time,
         wa_msg_status: "SUCCESS",
-        response: apiResponseofWA,
+        response: apiResponseofWA.data,
     }).save();
 
     res.status(httpStatus.OK).send(apiResponseofWA);
@@ -39,7 +38,6 @@ exports.sendWA = async (req, res) => {
         userName: st_name,
         st_status: status,
         mobile: mobile,
-        created_at: time,
         wa_msg_status: "Failed",
         response: error,
     }).save();
