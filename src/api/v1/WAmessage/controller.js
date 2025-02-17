@@ -16,7 +16,7 @@ exports.sendWA = async (req, res) => {
       st_name, status, mobile, time,
     } = req.params;
 
-    const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${mobile}&text=${bashSMS.template}&priority=wa&stype=normal`)
+    const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${mobile}&text=${bashSMS.template}&priority=wa&stype=normal&Params=${st_name},${statustoLowerCase()},${time}`)
     console.log("api response WA ", apiResponseofWA.data)
 
     await new WAMessages({
