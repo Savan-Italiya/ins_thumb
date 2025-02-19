@@ -15,10 +15,11 @@ exports.sendWA = async (req, res) => {
     const {
       st_name, status, mobile, time,
     } = req.params;
+console.log(bashSMS);
 
-    const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${mobile}&text=${bashSMS.template}&priority=wa&stype=normal&Params=${st_name},${statustoLowerCase()},${time}`)
+    const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${mobile}&text=${bashSMS.template}&priority=wa&stype=normal&Params=${st_name},${status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()},${time}`)
     console.log("api response WA ", apiResponseofWA.data)
-    console.log("status success === ", apiResponseofWA);
+    console.log("status success === ", apiResponseofWA.data);
     
     await new WAMessages({
         userName: st_name,
@@ -28,7 +29,7 @@ exports.sendWA = async (req, res) => {
         response: apiResponseofWA.data,
     }).save();
 
-    res.status(httpStatus.OK).send(apiResponseofWA);
+    res.status(httpStatus.OK).send(apiResponseofWA.data);
    
   } catch (error) {
     const {
@@ -42,7 +43,7 @@ exports.sendWA = async (req, res) => {
         wa_msg_status: "Failed",
         response: error,
     }).save();
-    console.log("status success === ", error);
+    console.log("status failed === ", error);
     res.status(httpStatus.NOT_ACCEPTABLE).json(error);
   }
 };
