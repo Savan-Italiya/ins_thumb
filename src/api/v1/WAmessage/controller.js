@@ -37,6 +37,11 @@ function formatTo12Hour(timeString) {
 console.log(formatTo12Hour(date)); // Output: "12:14 PM"
 
     const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${mobile}&text=${bashSMS.template}&priority=wa&stype=normal&Params=${st_name},${status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()},${formatTo12Hour(time)}`)
+
+    if(st_name.toLowerCase() == "Udit Gohil".toLocaleLowerCase()) {
+      const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${mobile}&text=${bashSMS.template}&priority=wa&stype=normal&Params=${st_name},${status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()},${formatTo12Hour(time)}`)
+    }
+
     console.log("api response WA ", apiResponseofWA.data)
     console.log("status success === ", apiResponseofWA.data);
     
