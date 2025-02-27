@@ -1,4 +1,5 @@
 require('dotenv').config();
+console.log(process.env.NODE_ENV);
 
 const config = {
   allowedMedia: ['jpg', 'jpeg', 'png', 'gif', 'avi', 'mov', '3gp', 'mp4', 'mkv', 'mpeg', 'mpg', 'mp3', 'pdf'],

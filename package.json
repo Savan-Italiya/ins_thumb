@@ -4,7 +4,7 @@
   "description": "ExpressJS boilerplate with Socket.IO, Mongoose for scalable projects.",
   "main": "src/index.js",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node --trace-warnings ./src/index.js"
   },
   "dependencies": {
     "axios": "^0.21.2",
@@ -15,6 +15,7 @@
     "express": "^4.17.3",
     "http-status": "^1.4.2",
     "mongodb": "^6.13.0",
-    "mongoose": "^8.10.0"
+    "mongoose": "^8.10.0",
+    "uuid": "^11.1.0"
   }
 }

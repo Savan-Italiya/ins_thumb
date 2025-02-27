@@ -36,14 +36,17 @@ function formatTo12Hour(timeString) {
 
 console.log(formatTo12Hour(date)); // Output: "12:14 PM"
 
+const student = await mongoose.connection.db.collection("students").findOne({userName: st_name});
+const faculty = await mongoose.connection.db.collection('faculties').findOne({_id: student.facultyId});
+
     const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${mobile}&text=${bashSMS.template}&priority=wa&stype=normal&Params=${st_name},${status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()},${formatTo12Hour(time)}`)
 
-    if(st_name.toLowerCase() == "Udit Gohil".toLocaleLowerCase()) {
-      const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=9898987872&text=${bashSMS.template}&priority=wa&stype=normal&Params=${st_name},${status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()},${formatTo12Hour(time)}`)
-    }
+    
 
-    console.log("api response WA ", apiResponseofWA.data)
-    console.log("status success === ", apiResponseofWA.data);
+    const apiResponseofWAFac = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${faculty.mobile}&text=${bashSMS.template}&priority=wa&stype=normal&Params=${st_name},${status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()},${formatTo12Hour(time)}`)
+
+    console.log("student WA ", apiResponseofWA.data)
+    console.log("faculty WA  === ", apiResponseofWAFac.data);
     
     await new WAMessages({
         userName: st_name,
@@ -52,6 +55,14 @@ console.log(formatTo12Hour(date)); // Output: "12:14 PM"
         wa_msg_status: "SUCCESS",
         response: apiResponseofWA.data,
     }).save();
+
+    await new WAMessages({
+      userName: `${st_name} fac == ${faculty.name}`,
+      st_status: status,
+      mobile: mobile,
+      wa_msg_status: "SUCCESS",
+      response: apiResponseofWAFac.data,
+  }).save();
 
     res.status(httpStatus.OK).send(apiResponseofWA.data);
    
@@ -67,6 +78,14 @@ console.log(formatTo12Hour(date)); // Output: "12:14 PM"
         wa_msg_status: "Failed",
         response: error,
     }).save();
+
+    await new WAMessages({
+      userName: `${st_name} fac == ${faculty.name}`,
+      st_status: status,
+      mobile: mobile,
+      wa_msg_status: "SUCCESS",
+      response: error,
+  }).save();
     console.log("status failed === ", error);
     res.status(httpStatus.NOT_ACCEPTABLE).json(error);
   }
