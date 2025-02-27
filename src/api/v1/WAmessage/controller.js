@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const WAMessages = require("./model")
 const { env, bashSMS } = require('../../../config');
 const { default: axios } = require('axios');
-
+const mongoose = require('mongoose')
 
 /**
  * Creates a new user if valid details
