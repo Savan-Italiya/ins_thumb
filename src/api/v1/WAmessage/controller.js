@@ -37,7 +37,10 @@ function formatTo12Hour(timeString) {
 console.log(formatTo12Hour(date)); // Output: "12:14 PM"
 
 const student = await mongoose.connection.db.collection("students").findOne({userName: st_name});
+console.log("student === ", student);
+
 const faculty = await mongoose.connection.db.collection('faculties').findOne({_id: student.facultyId});
+console.log("student === ", faculty);
 
     const apiResponseofWA = await axios.get(`${bashSMS.baseUrl}?user=${bashSMS.userName}&pass=${bashSMS.password}&sender=${bashSMS.senderId}&phone=${mobile}&text=${bashSMS.template}&priority=wa&stype=normal&Params=${st_name},${status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()},${formatTo12Hour(time)}`)
 
@@ -80,7 +83,7 @@ const faculty = await mongoose.connection.db.collection('faculties').findOne({_i
     }).save();
 
     await new WAMessages({
-      userName: `${st_name} fac == ${faculty.name}`,
+      userName: `${st_name} fac }`,
       st_status: status,
       mobile: mobile,
       wa_msg_status: "SUCCESS",
